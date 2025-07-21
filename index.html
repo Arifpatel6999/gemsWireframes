@@ -1,78 +1,1801 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>TSR Gems - Homepage</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSR Gems - Educational Programs for Children</title>
     <style>
-        body {
-            font-family: sans-serif;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
-        header,
-        footer,
-        section {
-            padding: 20px;
-            border-bottom: 1px solid #ccc;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
         }
 
-        .hero,
-        .events,
-        .contact {
-            margin: 20px 0;
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .center {
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .page {
+            display: none;
+            margin-top: 80px;
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Homepage Styles */
+        .hero {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Kiosks Section */
+        .filters {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .kiosk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .kiosk-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .kiosk-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .kiosk-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .kiosk-content {
+            padding: 1.5rem;
+        }
+
+        /* Admin Panel Styles */
+        .admin-header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            margin: -2rem -2rem 2rem -2rem;
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .admin-nav button {
+            background: #34495e;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .admin-nav button.active {
+            background: #3498db;
+        }
+
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+
+        /* Calendar Styles */
+        .calendar {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #ddd;
+        }
+
+        .calendar-day {
+            background: white;
+            padding: 1rem;
+            min-height: 80px;
+            position: relative;
+        }
+
+        .calendar-day.has-event {
+            background: #e3f2fd;
+        }
+
+        .event-dot {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 10px;
+            height: 10px;
+            background: #3498db;
+            border-radius: 50%;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        /* Login Form */
+        .login-container {
+            max-width: 400px;
+            margin: 5rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
             text-align: center;
         }
 
-        ul {
-            padding-left: 0;
-            list-style-type: none;
+        .text-success {
+            color: #27ae60;
+        }
+
+        .text-danger {
+            color: #e74c3c;
+        }
+
+        .mb-2 {
+            margin-bottom: 1rem;
+        }
+
+        .mt-2 {
+            margin-top: 1rem;
         }
     </style>
 </head>
 
-<body class="center">
+<body>
+    <!-- Navigation -->
+    <nav id="mainNav">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showPage('home')">TSR Gems</a>
+            <ul class="nav-links" id="publicNav">
+                <li><a href="#" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('kiosks')">Past Kiosks</a></li>
+                <li><a href="#" onclick="showPage('upcoming')">Upcoming Events</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                <li><a href="#" onclick="showLogin()">Admin Login</a></li>
+            </ul>
+            <ul class="nav-links hidden" id="adminNav">
+                <li><a href="#" onclick="showPage('admin')">Dashboard</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <header>
-        <h1>TSR Gems</h1>
-        <nav>
-            <a href="#">Home</a> |
-            <a href="kiosks.html">Kiosks</a> |
-            <a href="past-kiosk-details.html">Upcoming Kiosks</a> |
-            <a href="admin-login.html">Admin Login</a> |
-            <a href="super-admin-dashboard.html">Super Admin</a> |
-            <a href="junior-admin-dashboard.html">Junior Admin</a> |
-            <a href="student-registration-form.html">Kiosk Registration Form</a> |
-            <a href="reports.html">Reports</a> |
-            <a href="">Contact</a>
-        </nav>
-    </header>
+    <!-- Homepage -->
+    <div id="home" class="page active">
+        <div class="container">
+            <div class="hero">
+                <h1>Welcome to TSR Gems</h1>
+                <p>Empowering children through innovative educational programs and interactive kiosks</p>
+                <a href="#" class="btn" onclick="showPage('upcoming')">View Upcoming Events</a>
+            </div>
 
-    <section class="hero">
-        <h2>Our Mission & Vision</h2>
-        <p class="center">Inspiring young minds through interactive programs and educational kiosks.</p>
-    </section>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>Interactive Learning</h3>
+                    <p>Hands-on educational experiences designed to engage and inspire young minds through interactive
+                        kiosks and programs.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Expert Guidance</h3>
+                    <p>Our experienced team creates age-appropriate content that makes learning fun and memorable for
+                        children.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Community Impact</h3>
+                    <p>Building stronger communities through educational outreach and fostering a love for learning in
+                        children.</p>
+                </div>
+            </div>
 
-    <section class="events">
-        <h3>Featured Highlights</h3>
-        <ul>
-            <li>Event Highlight 1</li>
-            <li>Event Highlight 2</li>
-        </ul>
-    </section>
+            <div style="text-align: center; margin: 3rem 0;">
+                <h2>Our Mission</h2>
+                <p style="font-size: 1.1rem; max-width: 600px; margin: 1rem auto;">
+                    To provide accessible, engaging educational experiences that inspire curiosity and foster learning
+                    in children through innovative programs and interactive technologies.
+                </p>
+            </div>
+        </div>
+    </div>
 
-    <section class="contact">
-        <h3>Contact & Social Media</h3>
-        <p>Email | Phone | Facebook | Instagram</p>
-    </section>
+    <!-- Past Kiosks -->
+    <div id="kiosks" class="page">
+        <div class="container">
+            <h1>Past Educational Kiosks</h1>
 
-    <footer>
-        <p>© 2025 TSR Gems | All rights reserved.</p>
-    </footer>
+            <div class="filters">
+                <h3>Filter Events</h3>
+                <div class="filter-group">
+                    <input type="text" id="locationFilter" placeholder="Search by location">
+                    <input type="date" id="dateFilter">
+                    <select id="locFilter">
+                        <option value="">All Types</option>
+                        <option value="Bandra">Bandra</option>
+                        <option value="Andheri">Andheri</option>
+                        <option value="Malad">Malad</option>
+                    </select>
+                    <button class="btn" onclick="filterKiosks()">Apply Filters</button>
+                </div>
+            </div>
 
+            <div class="kiosk-grid" id="kioskGrid">
+                <!-- Kiosk cards will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Events -->
+    <div id="upcoming" class="page">
+        <div class="container">
+            <h1>Upcoming Events</h1>
+
+            <div class="calendar">
+                <div class="calendar-header">
+                    <button class="btn" onclick="previousMonth()">&lt; Previous</button>
+                    <h2 id="calendarMonth">January 2024</h2>
+                    <button class="btn" onclick="nextMonth()">Next &gt;</button>
+                </div>
+
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Calendar days will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact -->
+    <div id="contact" class="page">
+        <div class="container">
+            <h1>Contact Us</h1>
+
+            <div class="form-grid">
+                <div>
+                    <h3>Get in Touch</h3>
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" id="contactName">
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="contactEmail">
+                    </div>
+                    <div class="form-group">
+                        <label>Message:</label>
+                        <textarea id="contactMessage" rows="5"></textarea>
+                    </div>
+                    <button class="btn" onclick="submitContact()">Send Message</button>
+                </div>
+
+                <div>
+                    <h3>Contact Information</h3>
+                    <p><strong>Address:</strong> 123 Education Street, Learning City, LC 12345</p>
+                    <p><strong>Phone:</strong> (555) 123-4567</p>
+                    <p><strong>Email:</strong> info@tsrgems.org</p>
+
+                    <h3 style="margin-top: 2rem;">Follow Us</h3>
+                    <p>Stay connected with TSR Gems on social media for updates on upcoming events and educational
+                        content.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin" class="page">
+        <div class="container">
+            <div class="admin-header">
+                <h1>Admin Dashboard</h1>
+                <p>Welcome, <span id="adminUserName">Admin</span> (<span id="adminRole">Super Admin</span>)</p>
+
+                <div class="admin-nav">
+                    <button class="active" onclick="showAdminSection('dashboard')">Overview</button>
+                    <button onclick="showAdminSection('kiosk-management')">Manage Kiosks</button>
+                    <button onclick="showAdminSection('student-registration')">Student Registration</button>
+                    <button onclick="showAdminSection('reports')">Reports</button>
+                    <button onclick="showAdminSection('settings')">Settings</button>
+                </div>
+            </div>
+
+            <!-- Dashboard Overview -->
+            <div id="dashboard" class="admin-section active">
+                <h2>Dashboard Overview</h2>
+
+                <div class="features">
+                    <div class="feature-card">
+                        <h3>Total Events</h3>
+                        <p style="font-size: 2rem; color: #3498db;" id="totalEvents">12</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Registered Students</h3>
+                        <p style="font-size: 2rem; color: #27ae60;" id="totalStudents">245</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Upcoming Events</h3>
+                        <p style="font-size: 2rem; color: #f39c12;" id="upcomingEvents">3</p>
+                    </div>
+                </div>
+
+                <h3>Recent Activity</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Action</th>
+                            <th>User</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentActivity">
+                        <tr>
+                            <td>2024-01-15</td>
+                            <td>New Event Created</td>
+                            <td>Super Admin</td>
+                            <td>Science Fair 2024</td>
+                        </tr>
+                        <tr>
+                            <td>2024-01-14</td>
+                            <td>Student Registered</td>
+                            <td>Junior Admin</td>
+                            <td>Emma Johnson - Math Workshop</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Kiosk Management -->
+            <div id="kiosk-management" class="admin-section">
+                <h2>Kiosk Management</h2>
+
+                <button class="btn" onclick="showAddKioskForm()">Add New Kiosk</button>
+
+                <table class="data-table" style="margin-top: 2rem;">
+                    <thead>
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Date</th>
+                            <th>Location</th>
+                            <th>Participants</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="kioskTable">
+                        <!-- Kiosk data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Student Registration Management -->
+            <div id="student-registration" class="admin-section">
+                <h2>Student Registration Management</h2>
+
+                <button class="btn" onclick="showStudentRegistration()">Register New Student</button>
+                <button class="btn" style="margin-left: 1rem;" onclick="exportStudentData()">Export Data</button>
+
+                <div class="filters" style="margin-top: 2rem;">
+                    <div class="filter-group">
+                        <input type="text" id="studentSearch" placeholder="Search students...">
+                        <select id="eventFilter">
+                            <option value="">All Events</option>
+                            <option value="Bandra">Bandra</option>
+                            <option value="Malad">Malad</option>
+                        </select>
+                        <button class="btn" onclick="filterStudents()">Filter</button>
+                    </div>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Contact</th>
+                            <th>Event</th>
+                            <th>Registration Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTable">
+                        <!-- Student data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Reports -->
+            <div id="reports" class="admin-section">
+                <h2>Reports & Analytics</h2>
+
+                <div class="form-grid">
+                    <div>
+                        <h3>Generate Report</h3>
+                        <div class="form-group">
+                            <label>Report Type:</label>
+                            <select id="reportType">
+                                <option value="participation">Participation Report</option>
+                                <option value="events">Events Summary</option>
+                                <option value="demographics">Demographics</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Date Range:</label>
+                            <input type="date" id="reportStartDate">
+                            <input type="date" id="reportEndDate" style="margin-top: 0.5rem;">
+                        </div>
+                        <div class="form-group">
+                            <label>Format:</label>
+                            <select id="reportFormat">
+                                <option value="pdf">PDF</option>
+                                <option value="excel">Excel</option>
+                                <option value="csv">CSV</option>
+                            </select>
+                        </div>
+                        <button class="btn" onclick="generateReport()">Generate Report</button>
+                    </div>
+
+                    <div>
+                        <h3>Quick Stats</h3>
+                        <div class="feature-card">
+                            <h4>This Month</h4>
+                            <p>Events: <strong>4</strong></p>
+                            <p>New Registrations: <strong>67</strong></p>
+                            <p>Attendance Rate: <strong>94%</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings -->
+            <div id="settings" class="admin-section">
+                <h2>System Settings</h2>
+
+                <div class="form-grid">
+                    <div>
+                        <h3>User Management</h3>
+                        <button class="btn" onclick="showAddUserForm()">Add New User</button>
+
+                        <table class="data-table" style="margin-top: 1rem;">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Role</th>
+                                    <th>Last Login</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>admin</td>
+                                    <td>Super Admin</td>
+                                    <td>2024-01-15</td>
+                                    <td><button class="btn" style="padding: 0.25rem 0.5rem;">Edit</button></td>
+                                </tr>
+                                <tr>
+                                    <td>junior_admin</td>
+                                    <td>Junior Admin</td>
+                                    <td>2024-01-14</td>
+                                    <td><button class="btn" style="padding: 0.25rem 0.5rem;">Edit</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div>
+                        <h3>System Configuration</h3>
+                        <div class="form-group">
+                            <label>Organization Name:</label>
+                            <input type="text" value="TSR Gems" id="orgName">
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Email:</label>
+                            <input type="email" value="info@tsrgems.org" id="orgEmail">
+                        </div>
+                        <button class="btn" onclick="saveSettings()">Save Settings</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Admin Login</h2>
+
+            <div class="login-container" style="margin: 0; box-shadow: none;">
+                <div class="form-group">
+                    <label>Username:</label>
+                    <input type="text" id="loginUsername" value="admin">
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" id="loginPassword" value="password">
+                </div>
+                <button class="btn" onclick="login()" style="width: 100%;">Login</button>
+
+                <div style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                    <p><strong>Demo Credentials:</strong></p>
+                    <p>Super Admin: admin / password</p>
+                    <p>Junior Admin: junior / password</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Student Registration Modal -->
+    <div id="studentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('studentModal')">&times;</span>
+            <h2>Student Registration</h2>
+
+            <form id="studentForm">
+                <div class="form-grid">
+                    <div>
+                        <div class="form-group">
+                            <label>Student Name:</label>
+                            <input type="text" id="studentName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Age:</label>
+                            <input type="number" id="studentAge" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Parent/Guardian Name:</label>
+                            <input type="text" id="fatherName" required>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label>Contact Phone:</label>
+                            <input type="tel" id="contactPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email:</label>
+                            <input type="email" id="contactEmailStudent">
+                        </div>
+                        <div class="form-group">
+                            <label>Select Event:</label>
+                            <select id="selectedEvent" required>
+                                <option value="">Choose an event...</option>
+                                <option value="Bandra">Bandra</option>
+                                <option value="Malad">Malad</option>
+                                <option value="Andheri">Andheri</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Special Notes:</label>
+                    <textarea id="specialNotes" rows="3"
+                        placeholder="Notes about islamic class madarsa/tanzeem"></textarea>
+                </div>
+
+                <button type="button" class="btn" onclick="registerStudent()">Register Student</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Kiosk Modal -->
+    <div id="addKioskModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addKioskModal')">&times;</span>
+            <h2>Add New Kiosk Event</h2>
+
+            <form id="kioskForm">
+                <div class="form-grid">
+                    <div>
+                        <div class="form-group">
+                            <label>Event Name:</label>
+                            <input type="text" id="kioskName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Date:</label>
+                            <input type="date" id="kioskDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Location:</label>
+                            <input type="text" id="kioskLocation" required>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label>Duration (hours):</label>
+                            <input type="number" id="duration" min="1" step="0.5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Age Group:</label>
+                            <select id="ageGroup" required>
+                                <option value="">Select age group...</option>
+                                <option value="upto_14">upto_14</option>
+                                <option value="above_14">above_14</option>
+                                <option value="all">All ages</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea id="kioskDescription" rows="4" required
+                        placeholder="Describe the event activities and learning objectives..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Materials:</label>
+                    <input type="file" id="kioskMaterials" multiple accept=".pdf,.mp3,.mp4,.jpg,.png">
+                    <small style="color: #666;">Upload narration files, images, or PDF materials</small>
+                </div>
+
+                <button type="button" class="btn" onclick="saveKiosk()">Save Kiosk Event</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- student Registration Admin -->
+    <div id="studentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('studentModal')">&times;</span>
+            <h2>Student Registration</h2>
+
+            <form id="studentForm">
+                <div class="form-grid">
+                    <div>
+                        <div class="form-group">
+                            <label>Student Name*:</label>
+                            <input type="text" id="studentName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Father's Name*:</label>
+                            <input type="text" id="fatherName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Age*:</label>
+                            <input type="number" id="studentAge" min="5" max="18" required>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label>Contact Number*:</label>
+                            <input type="tel" id="contactPhone" required pattern="[0-9]{10}">
+                        </div>
+                        <div class="form-group">
+                            <label>Address*:</label>
+                            <textarea id="address" required rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Kiosk*:</label>
+                            <select id="selectedKiosk" required>
+                                <option value="">Select a kiosk...</option>
+                                <option value="Bandra">Bandra Kiosk</option>
+                                <option value="Malad">Malad Kiosk</option>
+                                <option value="Andheri">Andheri Kiosk</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Has the student joined our class before?*</label>
+                    <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                        <label><input type="radio" name="previousClass" value="yes" required> Yes</label>
+                        <label><input type="radio" name="previousClass" value="no"> No</label>
+                        <label><input type="radio" name="previousClass" value="other"> Other</label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="specialCommentsGroup" style="display: none;">
+                    <label>Special Comments:</label>
+                    <textarea id="specialComments" rows="2"></textarea>
+                </div>
+
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label>
+                        <input type="checkbox" id="consentCheckbox" required>
+                        I consent to my child participating in TSR Gems educational programs*
+                    </label>
+                </div>
+
+                <button type="button" class="btn" onclick="registerStudent()"
+                    style="width: 100%; margin-top: 1rem;">Register Student</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Event Detail Modal -->
+    <div id="eventDetailModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('eventDetailModal')">&times;</span>
+            <div id="eventDetailContent">
+                <!-- Event details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables for data storage (simulating database)
+        let currentUser = null;
+        let currentPage = 'home';
+        let currentMonth = new Date();
+
+        // Sample data
+        let kiosksData = [
+            {
+                id: 1,
+                name: "Bandra kiosk",
+                date: "2024-01-10",
+                location: "Bandra",
+                duration: 4,
+                description: "Memorization, Prize, Niyaz",
+                participants: 45,
+                ageGroup: "All ages",
+                materials: ["experiment_guide.pdf", "narration.mp3"],
+                feedback: 4.8,
+                images: ["science1.jpg", "science2.jpg"]
+            },
+            {
+                id: 2,
+                name: "Malad kiosk",
+                date: "2024-01-05",
+                location: "Malad",
+                duration: 3,
+                description: "Memorization, Prize, Niyaz",
+                participants: 32,
+                ageGroup: "All ages",
+                materials: ["art_instructions.pdf"],
+                feedback: 4.6,
+                images: ["art1.jpg", "art2.jpg"]
+            },
+            {
+                id: 3,
+                name: "Andheri kiosk",
+                date: "2024-01-08",
+                location: "Andheri",
+                duration: 2,
+                description: "Memorization, Prize, Niyaz",
+                participants: 28,
+                ageGroup: "All ages",
+                materials: ["math_puzzles.pdf", "solution_guide.pdf"],
+                feedback: 4.7,
+                images: ["math1.jpg"]
+            }
+        ];
+
+        let studentsData = [
+            {
+                id: 1,
+                name: "Emma Johnson",
+                age: 10,
+                fatherName: "Sarah Johnson",
+                phone: "(555) 123-4567",
+                email: "sarah.johnson@email.com",
+                event: "Bandra",
+                registrationDate: "2024-01-12",
+                specialNotes: "Goes to Aims"
+            },
+            {
+                id: 2,
+                name: "Michael Chen",
+                age: 8,
+                fatherName: "David Chen",
+                phone: "(555) 987-6543",
+                email: "david.chen@email.com",
+                event: "Malad",
+                registrationDate: "2024-01-11",
+                specialNotes: "Goes to TSR"
+            }
+        ];
+
+        let upcomingEvents = [
+            {
+                id: 4,
+                name: "Mumbra kiosk",
+                date: "2024-02-15",
+                location: "Mumbra",
+                description: "lorem ipsum"
+            },
+            {
+                id: 5,
+                name: "Govandi Kiosk",
+                date: "2024-02-20",
+                location: "Govandi",
+                description: "lorem ipsum"
+            },
+            {
+                id: 6,
+                name: "Dongri Kiosk",
+                date: "2024-02-25",
+                location: "Dongri",
+                description: "lorem ipsum"
+            }
+        ];
+
+        // Navigation functions
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            currentPage = pageId;
+
+            // Load page-specific content
+            if (pageId === 'kiosks') {
+                loadKiosks();
+            } else if (pageId === 'upcoming') {
+                loadCalendar();
+            } else if (pageId === 'admin') {
+                loadAdminDashboard();
+            }
+        }
+
+        function showAdminSection(sectionId) {
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+
+            document.querySelectorAll('.admin-nav button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Load section-specific content
+            if (sectionId === 'kiosk-management') {
+                loadKioskManagement();
+            } else if (sectionId === 'student-registration') {
+                loadStudentManagement();
+            }
+        }
+
+        // Authentication functions
+        function showLogin() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Simple authentication (in real app, this would be server-side)
+            if ((username === 'admin' && password === 'password') ||
+                (username === 'junior' && password === 'password')) {
+
+                currentUser = {
+                    username: username,
+                    role: username === 'admin' ? 'Super Admin' : 'Junior Admin'
+                };
+
+                document.getElementById('adminUserName').textContent = username;
+                document.getElementById('adminRole').textContent = currentUser.role;
+
+                document.getElementById('publicNav').classList.add('hidden');
+                document.getElementById('adminNav').classList.remove('hidden');
+
+                closeModal('loginModal');
+                showPage('admin');
+
+                // Show success message
+                alert('Login successful!');
+            } else {
+                alert('Invalid credentials. Try admin/password or junior/password');
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('publicNav').classList.remove('hidden');
+            document.getElementById('adminNav').classList.add('hidden');
+            showPage('home');
+            alert('Logged out successfully');
+        }
+
+        // Modal functions
+        function showStudentRegistration() {
+            document.getElementById('studentForm').reset();
+            document.getElementById('studentModal').style.display = 'block';
+            document.getElementById('studentName').focus();
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // ===== STUDENT REGISTRATION =====
+        // function registerStudent() {
+        //     const formData = {
+        //         name: document.getElementById('studentName').value.trim(),
+        //         fatherName: document.getElementById('fatherName').value.trim(),
+        //         age: parseInt(document.getElementById('studentAge').value),
+        //         phone: document.getElementById('contactPhone').value.trim(),
+        //         address: document.getElementById('address').value.trim(),
+        //         kiosk: document.getElementById('selectedKiosk').value,
+        //         previousClass: document.querySelector('input[name="previousClass"]:checked')?.value,
+        //         specialComments: document.getElementById('specialComments').value.trim(),
+        //         consent: document.getElementById('consentCheckbox').checked
+        //     };
+
+        //     // Validation
+        //     if (!formData.name || !formData.fatherName || isNaN(formData.age) ||
+        //         !formData.phone || !formData.address || !formData.kiosk ||
+        //         !formData.previousClass || !formData.consent) {
+        //         alert('Please fill in all required fields (marked with *)');
+        //         return;
+        //     }
+
+        //     if (formData.age < 5 || formData.age > 18) {
+        //         alert('Age must be between 5 and 18');
+        //         return;
+        //     }
+
+        //     if (!/^\d{10}$/.test(formData.phone)) {
+        //         alert('Please enter a valid 10-digit phone number');
+        //         return;
+        //     }
+
+        //     const newStudent = {
+        //         id: studentsData.length > 0 ? Math.max(...studentsData.map(s => s.id)) + 1 : 1,
+        //         name: formData.name,
+        //         fatherName: formData.fatherName,
+        //         age: formData.age,
+        //         phone: formData.phone,
+        //         address: formData.address,
+        //         kiosk: formData.kiosk,
+        //         previousClass: formData.previousClass,
+        //         specialComments: formData.specialComments,
+        //         registrationDate: new Date().toISOString().split('T')[0],
+        //         status: 'registered'
+        //     };
+
+        //     studentsData.push(newStudent);
+        //     alert(`Student ${newStudent.name} registered successfully for ${newStudent.kiosk} kiosk!`);
+        //     closeModal('studentModal');
+
+        //     if (currentPage === 'admin') {
+        //         loadStudentManagement();
+        //         updateDashboardStats();
+        //     }
+        // }
+
+        // ===== EVENT LISTENERS =====
+        document.addEventListener('DOMContentLoaded', function () {
+            // Previous class participation radio buttons
+            document.querySelectorAll('input[name="previousClass"]').forEach(radio => {
+                radio.addEventListener('change', function () {
+                    document.getElementById('specialCommentsGroup').style.display =
+                        this.value === 'other' ? 'block' : 'none';
+                });
+            });
+
+            // Close modals when clicking outside
+            window.onclick = function (event) {
+                const modals = document.getElementsByClassName('modal');
+                for (let modal of modals) {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                }
+            }
+        });
+
+        function showAddKioskForm() {
+            document.getElementById('addKioskModal').style.display = 'block';
+        }
+
+        // Kiosk management functions
+        function loadKiosks() {
+            const grid = document.getElementById('kioskGrid');
+            grid.innerHTML = '';
+
+            kiosksData.map(kiosk => {
+                const card = document.createElement('div');
+                card.className = 'kiosk-card';
+                card.innerHTML = `
+                    <div class="kiosk-image">
+                        📚 ${kiosk.location.toUpperCase()}
+                    </div>
+                    <div class="kiosk-content">
+                        <h3>${kiosk.name}</h3>
+                        <p><strong>Date:</strong> ${formatDate(kiosk.date)}</p>
+                        <p><strong>Location:</strong> ${kiosk.location}</p>
+                        <p><strong>Participants:</strong> ${kiosk.participants}</p>
+                        <p>${kiosk.description}</p>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn" onclick="viewEventDetail(${kiosk.id})" style="padding: 0.5rem 1rem;">View Details</button>
+                            <button class="btn" onclick="shareEvent(${kiosk.id})" style="padding: 0.5rem 1rem; margin-left: 0.5rem;">Share</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function loadKioskManagement() {
+            const table = document.getElementById('kioskTable');
+            table.innerHTML = '';
+
+            kiosksData.forEach(kiosk => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${kiosk.name}</td>
+                    <td>${formatDate(kiosk.date)}</td>
+                    <td>${kiosk.location}</td>
+                    <td>${kiosk.participants}</td>
+                    <td>
+                        <button class="btn" onclick="editKiosk(${kiosk.id})" style="padding: 0.25rem 0.5rem;">Edit</button>
+                        <button class="btn" onclick="deleteKiosk(${kiosk.id})" style="padding: 0.25rem 0.5rem; margin-left: 0.5rem; background: #e74c3c;">Delete</button>
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+        }
+
+        function loadStudentManagement() {
+            const table = document.getElementById('studentTable');
+            table.innerHTML = '';
+
+            studentsData.forEach(student => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.name}</td>
+                    <td>${student.age}</td>
+                    <td>${student.phone}</td>
+                    <td>${student.event}</td>
+                    <td>${formatDate(student.registrationDate)}</td>
+                    <td>
+                        <button class="btn" onclick="editStudent(${student.id})" style="padding: 0.25rem 0.5rem;">Edit</button>
+                        <button class="btn" onclick="deleteStudent(${student.id})" style="padding: 0.25rem 0.5rem; margin-left: 0.5rem; background: #e74c3c;">Delete</button>
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+        }
+
+        //update student Table Data
+
+        function updateStudentTableData() {
+            const table = document.getElementById('studentTable');
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                    <td>${student.name}</td>
+                    <td>${student.age}</td>
+                    <td>${student.phone}</td>
+                    <td>${student.event}</td>
+                    <td>${formatDate(student.registrationDate)}</td>
+                    <td>
+                        <button class="btn" onclick="editStudent(${student.id})" style="padding: 0.25rem 0.5rem;">Edit</button>
+                        <button class="btn" onclick="deleteStudent(${student.id})" style="padding: 0.25rem 0.5rem; margin-left: 0.5rem; background: #e74c3c;">Delete</button>
+                    </td>
+                `;
+            table.appendChild(row);
+        }
+
+        // Calendar functions
+        function loadCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const monthHeader = document.getElementById('calendarMonth');
+
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+
+            monthHeader.textContent = `${monthNames[currentMonth.getMonth()]} ${currentMonth.getFullYear()}`;
+
+            grid.innerHTML = '';
+
+            // Add day headers
+            const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            dayHeaders.forEach(day => {
+                const header = document.createElement('div');
+                header.style.background = '#f8f9fa';
+                header.style.fontWeight = 'bold';
+                header.style.textAlign = 'center';
+                header.style.padding = '0.5rem';
+                header.textContent = day;
+                grid.appendChild(header);
+            });
+
+            // Calculate first day of month and number of days
+            const firstDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
+            const lastDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startDay = firstDay.getDay();
+
+            // Add empty cells for days before month starts
+            for (let i = 0; i < startDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day';
+                grid.appendChild(emptyDay);
+            }
+
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+
+                // Check for events on this day
+                const currentDate = `${currentMonth.getFullYear()}-${String(currentMonth.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const hasEvent = upcomingEvents.some(event => event.date === currentDate);
+
+                if (hasEvent) {
+                    dayElement.classList.add('has-event');
+                    const eventDot = document.createElement('div');
+                    eventDot.className = 'event-dot';
+                    dayElement.appendChild(eventDot);
+
+                    dayElement.onclick = () => showEventsForDate(currentDate);
+                    dayElement.style.cursor = 'pointer';
+                }
+
+                grid.appendChild(dayElement);
+            }
+        }
+
+        function previousMonth() {
+            currentMonth.setMonth(currentMonth.getMonth() - 1);
+            loadCalendar();
+        }
+
+        function nextMonth() {
+            currentMonth.setMonth(currentMonth.getMonth() + 1);
+            loadCalendar();
+        }
+
+        function showEventsForDate(date) {
+            const events = upcomingEvents.filter(event => event.date === date);
+            if (events.length > 0) {
+                let content = `<h3>Events on ${formatDate(date)}</h3>`;
+                events.forEach(event => {
+                    content += `
+                        <div style="border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; border-radius: 5px;">
+                            <h4>${event.name}</h4>
+                            <p><strong>Location:</strong> ${event.location}</p>
+                            <p><strong>Type:</strong> ${event.type}</p>
+                            <p>${event.description}</p>
+                            <button class="btn" onclick="showStudentRegistration()">Register for Event</button>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('eventDetailContent').innerHTML = content;
+                document.getElementById('eventDetailModal').style.display = 'block';
+            }
+        }
+
+        // Form submission functions
+        function registerStudent() {
+            const formData = {
+                id: studentsData.length + 1,
+                name: document.getElementById('studentName').value,
+                age: parseInt(document.getElementById('studentAge').value),
+                fatherName: document.getElementById('fatherName').value,
+                phone: document.getElementById('contactPhone').value,
+                email: document.getElementById('contactEmailStudent').value,
+                event: document.getElementById('selectedEvent').value,
+                registrationDate: new Date().toISOString().split('T')[0],
+                specialNotes: document.getElementById('specialNotes').value
+            };
+
+            // Validate required fields
+            if (!formData.name || !formData.age || !formData.fatherName || !formData.phone || !formData.event) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            studentsData.push(formData);
+
+            alert(`Student ${formData.name} registered successfully for ${formData.event}!`);
+
+            // Reset form
+            document.getElementById('studentForm').reset();
+            closeModal('studentModal');
+
+            // Update dashboard stats
+            updateDashboardStats();
+            loadStudentManagement();
+        }
+
+        function saveKiosk() {
+            const formData = {
+                id: kiosksData.length + 1,
+                name: document.getElementById('kioskName').value,
+                date: document.getElementById('kioskDate').value,
+                location: document.getElementById('kioskLocation').value,
+                duration: parseFloat(document.getElementById('duration').value),
+                ageGroup: document.getElementById('ageGroup').value,
+                description: document.getElementById('kioskDescription').value,
+                participants: 0,
+                materials: [],
+                feedback: 0,
+                images: []
+            };
+
+            // Validate required fields
+            if (!formData.name || !formData.date || !formData.location) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            kiosksData.push(formData);
+
+            alert(`Kiosk event "${formData.name}" created successfully!`);
+
+            // Reset form
+            document.getElementById('kioskForm').reset();
+            closeModal('addKioskModal');
+
+            // Refresh kiosk management table
+            loadKioskManagement();
+            updateDashboardStats();
+        }
+
+        function submitContact() {
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('contactMessage').value;
+
+            if (!name || !email || !message) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            alert('Thank you for your message! We will get back to you soon.');
+
+            // Reset form
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('contactMessage').value = '';
+        }
+
+        // Filter and search functions
+        function filterKiosks() {
+            const locationFilter = document.getElementById('locationFilter').value.toLowerCase();
+            const dateFilter = document.getElementById('dateFilter').value;
+            const locFilter = document.getElementById('locFilter').value;
+
+            let filtered = kiosksData;
+
+            if (locationFilter) {
+                filtered = filtered.filter(kiosk =>
+                    kiosk.location.toLowerCase().includes(locationFilter)
+                );
+            }
+
+            if (dateFilter) {
+                filtered = filtered.filter(kiosk => kiosk.date === dateFilter);
+            }
+
+            if (locFilter) {
+                filtered = filtered.filter(kiosk => kiosk.location === locFilter);
+            }
+
+            // Re-render filtered results
+            const grid = document.getElementById('kioskGrid');
+            grid.innerHTML = '';
+
+            filtered.forEach(kiosk => {
+                const card = document.createElement('div');
+                card.className = 'kiosk-card';
+                card.innerHTML = `
+                    <div class="kiosk-image">
+                        📚 ${kiosk.location.toUpperCase()}
+                    </div>
+                    <div class="kiosk-content">
+                        <h3>${kiosk.name}</h3>
+                        <p><strong>Date:</strong> ${formatDate(kiosk.date)}</p>
+                        <p><strong>Location:</strong> ${kiosk.location}</p>
+                        <p><strong>Participants:</strong> ${kiosk.participants}</p>
+                        <p>${kiosk.description}</p>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn" onclick="viewEventDetail(${kiosk.id})" style="padding: 0.5rem 1rem;">View Details</button>
+                            <button class="btn" onclick="shareEvent(${kiosk.id})" style="padding: 0.5rem 1rem; margin-left: 0.5rem;">Share</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterStudents() {
+            const search = document.getElementById('studentSearch').value.toLowerCase();
+            const eventFilter = document.getElementById('eventFilter').value;
+
+            let filtered = studentsData;
+
+            if (search) {
+                filtered = filtered.filter(student =>
+                    student.name.toLowerCase().includes(search) ||
+                    student.fatherName.toLowerCase().includes(search)
+                );
+            }
+
+            if (eventFilter) {
+                filtered = filtered.filter(student => student.event === eventFilter);
+            }
+
+            // Re-render filtered results
+            const table = document.getElementById('studentTable');
+            table.innerHTML = '';
+
+            filtered.forEach(student => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.name}</td>
+                    <td>${student.age}</td>
+                    <td>${student.fatherName}</td>
+                    <td>${student.phone}</td>
+                    <td>${student.event}</td>
+                    <td>${formatDate(student.registrationDate)}</td>
+                    <td>
+                        <button class="btn" onclick="editStudent(${student.id})" style="padding: 0.25rem 0.5rem;">Edit</button>
+                        <button class="btn" onclick="deleteStudent(${student.id})" style="padding: 0.25rem 0.5rem; margin-left: 0.5rem; background: #e74c3c;">Delete</button>
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+        }
+
+        // Admin functions
+        function loadAdminDashboard() {
+            updateDashboardStats();
+        }
+
+        function updateDashboardStats() {
+            document.getElementById('totalEvents').textContent = kiosksData.length;
+            document.getElementById('totalStudents').textContent = studentsData.length;
+            document.getElementById('upcomingEvents').textContent = upcomingEvents.length;
+        }
+
+        function editKiosk(id) {
+            alert(`Edit kiosk functionality would be implemented here for kiosk ID: ${id}`);
+        }
+
+        function deleteKiosk(id) {
+            if (confirm('Are you sure you want to delete this kiosk event?')) {
+                kiosksData = kiosksData.filter(kiosk => kiosk.id !== id);
+                loadKioskManagement();
+                updateDashboardStats();
+                alert('Kiosk event deleted successfully');
+            }
+        }
+
+        function editStudent(id) {
+            alert(`Edit student functionality would be implemented here for student ID: ${id}`);
+        }
+
+        function deleteStudent(id) {
+            if (confirm('Are you sure you want to delete this student registration?')) {
+                studentsData = studentsData.filter(student => student.id !== id);
+                loadStudentManagement();
+                updateDashboardStats();
+                alert('Student registration deleted successfully');
+            }
+        }
+
+        function viewEventDetail(id) {
+            const event = kiosksData.find(k => k.id === id);
+            if (event) {
+                const content = `
+                    <h2>${event.name}</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                        <div>
+                            <p><strong>Date:</strong> ${formatDate(event.date)}</p>
+                            <p><strong>Location:</strong> ${event.location}</p>
+                            <p><strong>Type:</strong> ${event.type}</p>
+                            <p><strong>Duration:</strong> ${event.duration || 'N/A'} hours</p>
+                            <p><strong>Age Group:</strong> ${event.ageGroup}</p>
+                        </div>
+                        <div>
+                            <p><strong>Participants:</strong> ${event.participants}</p>
+                            <p><strong>Feedback Rating:</strong> ${event.feedback}/5.0 ⭐</p>
+                            <p><strong>Materials:</strong> ${event.materials.length} files</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Description</h3>
+                        <p>${event.description}</p>
+                    </div>
+                    <div style="margin-top: 2rem;">
+                        <h3>Event Gallery</h3>
+                        <div style="display: flex; gap: 1rem;">
+                            ${event.images.map(img => `<div style="width: 100px; height: 100px; background: #f0f0f0; border-radius: 5px; display: flex; align-items: center; justify-content: center;">📸</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('eventDetailContent').innerHTML = content;
+                document.getElementById('eventDetailModal').style.display = 'block';
+            }
+        }
+
+        function shareEvent(id) {
+            const event = kiosksData.find(k => k.id === id);
+            if (event) {
+                const shareText = `Check out this TSR Gems event: ${event.name} at ${event.location} on ${formatDate(event.date)}`;
+
+                if (navigator.share) {
+                    navigator.share({
+                        title: event.name,
+                        text: shareText,
+                        url: window.location.href
+                    });
+                } else {
+                    // Fallback - copy to clipboard
+                    navigator.clipboard.writeText(shareText).then(() => {
+                        alert('Event details copied to clipboard!');
+                    });
+                }
+            }
+        }
+
+        // Report functions
+        function generateReport() {
+            const reportType = document.getElementById('reportType').value;
+            const startDate = document.getElementById('reportStartDate').value;
+            const endDate = document.getElementById('reportEndDate').value;
+            const format = document.getElementById('reportFormat').value;
+
+            if (!startDate || !endDate) {
+                alert('Please select date range for the report');
+                return;
+            }
+
+            alert(`Generating ${reportType} report in ${format.toUpperCase()} format for ${startDate} to ${endDate}...`);
+
+            // In a real application, this would generate and download the actual report
+            setTimeout(() => {
+                alert('Report generated successfully! Download will start automatically.');
+            }, 1500);
+        }
+
+        function exportStudentData() {
+            const data = studentsData.map(student => ({
+                Name: student.name,
+                Age: student.age,
+                'Parent/Guardian': student.fatherName,
+                Phone: student.phone,
+                Email: student.email,
+                Event: student.event,
+                'Registration Date': student.registrationDate,
+                'Special Notes': student.specialNotes
+            }));
+
+            // Convert to CSV format
+            const csv = convertToCSV(data);
+            downloadCSV(csv, 'students_data.csv');
+        }
+
+        function convertToCSV(data) {
+            if (data.length === 0) return '';
+
+            const headers = Object.keys(data[0]);
+            const csvContent = [
+                headers.join(','),
+                ...data.map(row =>
+                    headers.map(header =>
+                        JSON.stringify(row[header] || '')
+                    ).join(',')
+                )
+            ].join('\n');
+
+            return csvContent;
+        }
+
+        function downloadCSV(csv, filename) {
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('hidden', '');
+            a.setAttribute('href', url);
+            a.setAttribute('download', filename);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function showAddUserForm() {
+            alert('Add user functionality would be implemented here with proper user management system');
+        }
+
+        function saveSettings() {
+            const orgName = document.getElementById('orgName').value;
+            const orgEmail = document.getElementById('orgEmail').value;
+            const maxRegs = document.getElementById('maxRegistrations').value;
+
+            alert('Settings saved successfully!');
+        }
+
+        // Utility functions
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function () {
+            // Load initial content
+            loadKiosks();
+            updateDashboardStats();
+
+            // Close modals when clicking outside
+            window.onclick = function (event) {
+                const modals = document.getElementsByClassName('modal');
+                for (let modal of modals) {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
