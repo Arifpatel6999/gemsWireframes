@@ -643,7 +643,7 @@
             <!-- Student Registration Management -->
             <div id="student-registration" class="admin-section">
                 <h2>Student Registration Management</h2>
-                <p style="font-weight: 500; margin: 0.5rem 0 1rem 0;">(To Registration a Student Activate Any Kiosk)</p>
+                <p style="font-weight: 500; margin: 0.5rem 0 1rem 0;">(To Register a Student Activate Any Kiosk)</p>
 
                 <button class="btn" onclick="showStudentRegistration()">Register New Student</button>
                 <button class="btn" style="margin-left: 1rem;" onclick="exportStudentData()">Export Data</button>
@@ -2488,6 +2488,8 @@ TSR Gems team
             // Convert to CSV format
             const csv = convertToCSV(data);
             downloadCSV(csv, 'students_data.csv');
+
+            alert("Sample Data Downloaded")
         }
 
         function convertToCSV(data) {
