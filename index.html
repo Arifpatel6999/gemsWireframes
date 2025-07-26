@@ -100,6 +100,11 @@
             margin-bottom: 2rem;
         }
 
+        .hero p>span:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
         .btn {
             background: #667eea;
             color: white;
@@ -413,7 +418,7 @@
             <ul class="nav-links" id="publicNav">
                 <li><a href="#" onclick="showPage('home')">Home</a></li>
                 <li><a href="#" onclick="showPage('kiosks')">Past Kiosks</a></li>
-                <li><a href="#" onclick="showPage('upcoming')">Upcoming Events</a></li>
+                <li><a href="#" onclick="showPage('upcoming')">Upcoming Kiosks</a></li>
                 <li><a href="#" onclick="showPage('contact')">Contact</a></li>
                 <li><a href="#" onclick="showLogin()">Admin Login</a></li>
             </ul>
@@ -430,7 +435,8 @@
             <div class="hero">
                 <h1>Welcome to TSR Gems</h1>
                 <p>Empowering children through innovative educational programs and interactive kiosks</p>
-                <a href="#" class="btn" onclick="showPage('upcoming')">View Upcoming Events</a>
+                <p>A <span>TheStrongRope</span> Initiative</p>
+                <a href="#" class="btn" onclick="showPage('upcoming')">View Upcoming Kiosks</a>
             </div>
 
             <div class="features">
@@ -464,7 +470,7 @@
     <!-- Past Kiosks -->
     <div id="kiosks" class="page">
         <div class="container">
-            <h1>Past Educational Kiosks</h1>
+            <h1>Past Kiosks</h1>
 
             <div class="filters">
                 <h3>Filter Events</h3>
@@ -556,6 +562,8 @@
                         Kiosks</button>
                     <button onclick="showAdminSection('student-registration')">Student Registration</button>
                     <button onclick="showAdminSection('reports')">Reports</button>
+                    <button class="super-admin-only" onclick="showAdminSection('admin-management')">Admin
+                        Management</button>
                     <button class="super-admin-only" onclick="showAdminSection('settings')">Settings</button>
                 </div>
             </div>
@@ -635,6 +643,7 @@
             <!-- Student Registration Management -->
             <div id="student-registration" class="admin-section">
                 <h2>Student Registration Management</h2>
+                <p style="font-weight: 500; margin: 0.5rem 0 1rem 0;">(To Registration a Student Activate Any Kiosk)</p>
 
                 <button class="btn" onclick="showStudentRegistration()">Register New Student</button>
                 <button class="btn" style="margin-left: 1rem;" onclick="exportStudentData()">Export Data</button>
@@ -672,6 +681,7 @@
             <!-- Reports -->
             <div id="reports" class="admin-section">
                 <h2>Reports & Analytics</h2>
+                <p style="font-weight: 500; margin: 0.5rem 0 1rem 0;">(Frontend Only - Not fully Funtional)</p>
 
                 <div class="form-grid">
                     <div>
@@ -679,9 +689,8 @@
                         <div class="form-group">
                             <label>Report Type:</label>
                             <select id="reportType">
-                                <option value="participation">Participation Report</option>
-                                <option value="events">Events Summary</option>
-                                <option value="demographics">Demographics</option>
+                                <option value="participation">Kiosk Participation Data</option>
+                                <option value="demographics">All Kiosk Data</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -712,41 +721,52 @@
                 </div>
             </div>
 
+            <!-- Admin Management -->
+            <div id="admin-management" class="admin-section">
+                <h2>Admin Management</h2>
+                <button class="btn" onclick="showAddUserForm()">Add New User</button>
+
+                <table class="data-table" style="margin-top: 1rem;">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Role</th>
+                            <th>Last Login</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminUsersTable">
+                        <tr>
+                            <td>admin</td>
+                            <td>Super Admin</td>
+                            <td>2024-01-15</td>
+                            <td>
+                                <button class="btn" style="padding: 0.25rem 0.5rem;"
+                                    onclick="editAdmin('admin')">Edit</button>
+                                <button class="btn" style="padding: 0.25rem 0.5rem; margin-left: 0.5rem;"
+                                    onclick="deleteAdmin('admin')">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>junior</td>
+                            <td>Junior Admin</td>
+                            <td>2024-01-14</td>
+                            <td>
+                                <button class="btn" style="padding: 0.25rem 0.5rem;"
+                                    onclick="editAdmin('junior')">Edit</button>
+                                <button class="btn" style="padding: 0.25rem 0.5rem; margin-left: 0.5rem;"
+                                    onclick="deleteAdmin('junior')">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
             <!-- Settings -->
             <div id="settings" class="admin-section">
                 <h2>System Settings</h2>
 
                 <div class="form-grid">
-                    <div>
-                        <h3>User Management</h3>
-                        <button class="btn" onclick="showAddUserForm()">Add New User</button>
-
-                        <table class="data-table" style="margin-top: 1rem;">
-                            <thead>
-                                <tr>
-                                    <th>Username</th>
-                                    <th>Role</th>
-                                    <th>Last Login</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>admin</td>
-                                    <td>Super Admin</td>
-                                    <td>2024-01-15</td>
-                                    <td><button class="btn" style="padding: 0.25rem 0.5rem;">Edit</button></td>
-                                </tr>
-                                <tr>
-                                    <td>junior_admin</td>
-                                    <td>Junior Admin</td>
-                                    <td>2024-01-14</td>
-                                    <td><button class="btn" style="padding: 0.25rem 0.5rem;">Edit</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
                     <div>
                         <h3>System Configuration</h3>
                         <div class="form-group">
@@ -1024,7 +1044,20 @@
                 date: "2024-01-10",
                 location: "Bandra",
                 duration: 4,
-                description: "Memorization, Prize, Niyaz",
+                description: `
+📚 Hadees Yaad Karo, Inaam Jeeto! 🎁
+
+✨ GHADEER - KIOSK ✨
+TSR Ki Taraf Se - Hadeesen Yaad Karne Ka Muqabla
+
+Ye Profram Sirf Ladkon Ke Liye Tha
+
+🎁 Bachho Ne Hadeeth Yaad ki Aur Unko Inamaat diye gaye 🎁
+
+TSR Gems team
+==============
+🪀 Updates ke liye WhatsApp  Community Join Karen: https://c....
+                `,
                 participants: 45,
                 ageGroup: "All ages",
                 materials: ["experiment_guide.pdf", "narration.mp3"],
@@ -1039,7 +1072,20 @@
                 date: "2024-01-05",
                 location: "Malad",
                 duration: 3,
-                description: "Memorization, Prize, Niyaz",
+                description: `
+📚 Hadees Yaad Karo, Inaam Jeeto! 🎁
+
+✨ GHADEER - KIOSK ✨
+TSR Ki Taraf Se - Hadeesen Yaad Karne Ka Muqabla
+
+Ye Profram Sirf Ladkon Ke Liye Tha
+
+🎁 Bachho Ne Hadeeth Yaad ki Aur Unko Inamaat diye gaye 🎁
+
+TSR Gems team
+==============
+🪀 Updates ke liye WhatsApp  Community Join Karen: https://c....
+                `,
                 participants: 32,
                 ageGroup: "All ages",
                 materials: ["art_instructions.pdf"],
@@ -1054,7 +1100,20 @@
                 date: "2024-01-08",
                 location: "Andheri",
                 duration: 2,
-                description: "Memorization, Prize, Niyaz",
+                description: `
+📚 Hadees Yaad Karo, Inaam Jeeto! 🎁
+
+✨ GHADEER - KIOSK ✨
+TSR Ki Taraf Se - Hadeesen Yaad Karne Ka Muqabla
+
+Ye Profram Sirf Ladkon Ke Liye Tha
+
+🎁 Bachho Ne Hadeeth Yaad ki Aur Unko Inamaat diye gaye 🎁
+
+TSR Gems team
+==============
+🪀 Updates ke liye WhatsApp  Community Join Karen: https://c....
+                `,
                 participants: 28,
                 ageGroup: "All ages",
                 materials: ["math_puzzles.pdf", "solution_guide.pdf"],
@@ -1096,7 +1155,25 @@
                 name: "Mumbra kiosk",
                 date: `${currentMonth.getFullYear().toString()}-${String(currentMonth.getMonth() + 1).padStart(2, '0')}-${String(15).padStart(2, '0')}`,
                 location: "Mumbra",
-                description: "lorem ipsum",
+                description: `
+📚 Hadees Yaad Karo, Inaam Jeeto! 🎁
+
+✨ GHADEER - KIOSK ✨
+TSR Ki Taraf Se - Hadeesen Yaad Karne Ka Muqabla
+
+Sirf Ladkon Ke Liye
+
+Insha'Allah
+🗓️ 22-Jun-2025 (example)
+🕗 Dopahar: 3 Bajay se
+🕌 24-J, Zakir Hussain Nagar, Govandi, Mumbai- 43
+
+🎁 Common Prize Sab ke liye honge 🎁
+
+TSR Gems team
+==============
+🪀 Updates ke liye WhatsApp  Community Join Karen: https://c....
+                `,
                 isActive: false,
                 completed: false
             },
@@ -1105,16 +1182,52 @@
                 name: "Govandi Kiosk",
                 date: `${currentMonth.getFullYear().toString()}-${String(currentMonth.getMonth() + 1).padStart(2, '0')}-${String(20).padStart(2, '0')}`,
                 location: "Govandi",
-                description: "lorem ipsum",
+                description: `
+📚 Hadees Yaad Karo, Inaam Jeeto! 🎁
+
+✨ GHADEER - KIOSK ✨
+TSR Ki Taraf Se - Hadeesen Yaad Karne Ka Muqabla
+
+Sirf Ladkon Ke Liye
+
+Insha'Allah
+🗓️ 22-Jun-2025 (Example)
+🕗 Dopahar: 3 Bajay se
+🕌 24-J, Zakir Hussain Nagar, Govandi, Mumbai- 43
+
+🎁 Common Prize Sab ke liye honge 🎁
+
+TSR Gems team
+==============
+🪀 Updates ke liye WhatsApp  Community Join Karen: https://c....
+                `,
                 isActive: false,
                 completed: false
             },
             {
                 id: 6,
                 name: "Dongri Kiosk",
-                date: `${currentMonth.getFullYear().toString()}-${String(currentMonth.getMonth() + 1).padStart(2, '0')}-${String(25).padStart(2, '0')}`,
+                date: `${currentMonth.getFullYear().toString()}-${String(currentMonth.getMonth() + 2).padStart(2, '0')}-${String(25).padStart(2, '0')}`,
                 location: "Dongri",
-                description: "lorem ipsum",
+                description: `
+📚 Hadees Yaad Karo, Inaam Jeeto! 🎁
+
+✨ GHADEER - KIOSK ✨
+TSR Ki Taraf Se - Hadeesen Yaad Karne Ka Muqabla
+
+Sirf Ladkon Ke Liye
+
+Insha'Allah
+🗓️ 22-Jun-2025 (Example)
+🕗 Dopahar: 3 Bajay se
+🕌 24-J, Zakir Hussain Nagar, Govandi, Mumbai- 43
+
+🎁 Common Prize Sab ke liye honge 🎁
+
+TSR Gems team
+==============
+🪀 Updates ke liye WhatsApp  Community Join Karen: https://c....
+                `,
                 isActive: false,
                 completed: false
             }
@@ -1155,7 +1268,94 @@
                 loadKioskManagement();
             } else if (sectionId === 'student-registration') {
                 loadStudentManagement();
+            } else if (sectionId === 'admin-management') {
+                refreshAdminTable();
             }
+        }
+
+        // Admin Management Functions
+        function refreshAdminTable() {
+            const tableBody = document.getElementById('adminUsersTable');
+            if (!tableBody) return;
+
+            tableBody.innerHTML = '';
+            adminUsers.forEach(admin => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${admin.username}</td>
+                    <td>${admin.role}</td>
+                    <td>${new Date(admin.lastLogin).toLocaleDateString()}</td>
+                    <td>
+                        <button class="btn" style="padding: 0.25rem 0.5rem;" onclick="editAdmin('${admin.username}')">Edit</button>
+                        <button class="btn" style="padding: 0.25rem 0.5rem; margin-left: 0.5rem;" onclick="deleteAdmin('${admin.username}')">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function showAddUserForm() {
+            const username = prompt('Enter username:');
+            if (!username) return;
+
+            const password = prompt('Enter password:');
+            if (!password) return;
+
+            const role = prompt('Enter role (Super Admin/Junior Admin):');
+            if (!role || !['Super Admin', 'Junior Admin'].includes(role)) {
+                alert('Invalid role. Must be "Super Admin" or "Junior Admin"');
+                return;
+            }
+
+            // Add new admin user
+            const newAdmin = {
+                id: adminUsers.length + 1,
+                username: username,
+                password: password,
+                role: role,
+                lastLogin: new Date().toISOString()
+            };
+
+            adminUsers.push(newAdmin);
+            refreshAdminTable();
+            alert('Admin user added successfully!');
+            addActivityLog('Admin Added', `New admin user ${username} added with role ${role}`);
+        }
+
+        function deleteAdmin(username) {
+            if (username === 'admin') {
+                alert('Cannot delete super admin account!');
+                return;
+            }
+
+            if (confirm(`Are you sure you want to delete admin user "${username}"?`)) {
+                const index = adminUsers.findIndex(admin => admin.username === username);
+                if (index !== -1) {
+                    adminUsers.splice(index, 1);
+                    refreshAdminTable();
+                    alert('Admin user deleted successfully!');
+                    addActivityLog('Admin Deleted', `Admin user ${username} was deleted`);
+                }
+            }
+        }
+
+        function editAdmin(username) {
+            const admin = adminUsers.find(a => a.username === username);
+            if (!admin) return;
+
+            const newPassword = prompt('Enter new password (leave empty to keep current):');
+            if (newPassword) {
+                admin.password = newPassword;
+            }
+
+            const newRole = prompt('Enter new role (Super Admin/Junior Admin) or leave empty to keep current:');
+            if (newRole && ['Super Admin', 'Junior Admin'].includes(newRole)) {
+                admin.role = newRole;
+            }
+
+            refreshAdminTable();
+            alert('Admin user updated successfully!');
+            addActivityLog('Admin Updated', `Admin user ${username} was updated`);
         }
 
         // Authentication functions
@@ -1364,7 +1564,7 @@
                         <p><strong>Date:</strong> ${formatDate(kiosk.date)}</p>
                         <p><strong>Location:</strong> ${kiosk.location}</p>
                         <p><strong>Participants:</strong> ${kiosk.participants}</p>
-                        <p>${kiosk.description}</p>
+                        <p><pre>${kiosk.description.slice(0, 70) + '...'}</pre></p>
                         <div style="margin-top: 1rem;">
                             <button class="btn" onclick="viewEventDetail(${kiosk.id})" style="padding: 0.5rem 1rem;">View Details</button>
                             <button class="btn" onclick="shareEvent(${kiosk.id})" style="padding: 0.5rem 1rem; margin-left: 0.5rem;">Share</button>
@@ -1376,6 +1576,55 @@
         }
 
         function loadKioskManagement() {
+            const tableBody = document.getElementById('kioskTable');
+            if (!tableBody) return;
+
+            // Create table header if it doesn't exist
+            const thead = tableBody.parentElement.querySelector('thead');
+            if (!thead.innerHTML) {
+                thead.innerHTML = `
+                    <tr>
+                        <th>Event Name</th>
+                        <th>Date</th>
+                        <th>Location</th>
+                        <th>Participants</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                `;
+            }
+
+            // Clear existing rows
+            tableBody.innerHTML = '';
+
+            // Combine and sort past and upcoming events
+            const combinedKiosks = [...kiosksData, ...upcomingEvents].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            combinedKiosks.forEach(kiosk => {
+                const row = document.createElement('tr');
+                const isActive = kiosk.isActive ? 'Active' : 'Inactive';
+
+                // Check if it's a past kiosk by comparing date
+                const isPastKiosk = new Date(kiosk.date) < new Date();
+
+                row.innerHTML = `
+                    <td>${kiosk.name}</td>
+                    <td>${new Date(kiosk.date).toLocaleDateString()}</td>
+                    <td>${kiosk.location}</td>
+                    <td>${kiosk.participants || 0}</td>
+                    <td>${isPastKiosk ? 'Completed' : isActive}</td>
+                    <td>
+                        <button class="btn" onclick="editKiosk(${kiosk.id})">Edit</button>
+                        <button class="btn" onclick="deleteKiosk(${kiosk.id})">Delete</button>
+                        ${!isPastKiosk ? `
+                        <button class="btn" onclick="toggleKioskStatus(${kiosk.id})">
+                            ${kiosk.isActive ? 'Deactivate' : 'Activate'}
+                        </button>
+                        ` : ''}
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
             const table = document.getElementById('kioskTable');
             table.innerHTML = `
                 <tr>
@@ -1401,6 +1650,7 @@
                     <td>${kiosk.location}</td>
                     <td>${kiosk.participants || 0}</td>
                     <td>
+                        ${isUpcoming ? `
                         <div class="toggle-switch" style="display: flex; align-items: center; gap: 8px;">
                             <label class="switch" style="position: relative; display: inline-block; width: 50px; height: 24px;">
                                 <input type="checkbox" ${kiosk.isActive ? 'checked' : ''} 
@@ -1428,9 +1678,14 @@
                                 </style>
                             </label>
                             <span class="status-label" style="color: ${kiosk.isActive ? '#2ecc71' : '#e74c3c'}">
-                                ${kiosk.completed ? '(Completed)' : kiosk.isActive ? 'Active' : 'Inactive'}
+                                ${kiosk.isActive ? 'Active' : 'Inactive'}
                             </span>
                         </div>
+                        ` : `
+                        <div style="color: #666;">
+                            <span>Completed</span>
+                        </div>
+                        `}
                     </td>
                     <td>
                         <button class="btn" onclick="editKiosk(${kiosk.id}, ${isUpcoming})" style="padding: 0.25rem 0.5rem;">Edit</button>
@@ -1566,8 +1821,7 @@
                         <div style="border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; border-radius: 5px;">
                             <h4>${event.name}</h4>
                             <p><strong>Location:</strong> ${event.location}</p>
-                            <p><strong>Type:</strong> ${event.type}</p>
-                            <p>${event.description}</p>
+                            <p><pre>${event.description}</pre></p>
                             </div>
                             `;
                     // <button class="btn" onclick="showStudentRegistration()">Register for Event</button>
@@ -1896,19 +2150,28 @@
             adminUsers.push(newAdmin);
             addActivityLog('Admin Created', `New ${role} account created for ${username} by ${currentUser.username}`);
             alert('New admin user created successfully!');
-            loadUserManagementTable();
+            // loadUserManagementTable();
+            refreshAdminTable();
         }
 
-        function deleteAdmin(adminId) {
-            if (confirm('Are you sure you want to delete this admin user?')) {
-                const admin = adminUsers.find(a => a.id === adminId);
-                if (admin && admin.id !== currentUser.id) {
-                    adminUsers = adminUsers.filter(a => a.id !== adminId);
-                    addActivityLog('Admin Deleted', `Admin user ${admin.username} was deleted by ${currentUser.username}`);
+        function deleteAdmin(username) {
+            if (username === 'admin') {
+                alert('Cannot delete the super admin account!');
+                return;
+            }
+
+            if (username === currentUser?.username) {
+                alert('You cannot delete your own account');
+                return;
+            }
+
+            if (confirm(`Are you sure you want to delete the admin user "${username}"?`)) {
+                const adminIndex = adminUsers.findIndex(a => a.username === username);
+                if (adminIndex !== -1) {
+                    adminUsers.splice(adminIndex, 1);
+                    addActivityLog('Admin Deleted', `Admin user ${username} was deleted by ${currentUser.username}`);
                     alert('Admin user deleted successfully');
-                    loadUserManagementTable();
-                } else if (admin.id === currentUser.id) {
-                    alert('You cannot delete your own account');
+                    refreshAdminTable();
                 }
             }
         }
@@ -2144,7 +2407,6 @@
                         <div>
                             <p><strong>Date:</strong> ${formatDate(event.date)}</p>
                             <p><strong>Location:</strong> ${event.location}</p>
-                            <p><strong>Type:</strong> ${event.type}</p>
                             <p><strong>Duration:</strong> ${event.duration || 'N/A'} hours</p>
                             <p><strong>Age Group:</strong> ${event.ageGroup}</p>
                         </div>
@@ -2156,7 +2418,7 @@
                     </div>
                     <div>
                         <h3>Description</h3>
-                        <p>${event.description}</p>
+                        <p><pre>${event.description}</pre></p>
                     </div>
                     <div style="margin-top: 2rem;">
                         <h3>Event Gallery</h3>
@@ -2333,13 +2595,14 @@
                 username: username,
                 password: password,
                 role: role,
-                lastLogin: '-'
+                lastLogin: new Date().toISOString()
             };
 
             adminUsers.push(newUser);
             alert('New admin user added successfully');
             closeModal('addUserModal');
-            loadUserManagementTable();
+            refreshAdminTable(); // Use refreshAdminTable instead of loadUserManagementTable
+            addActivityLog('Admin Created', `New ${role} account created by ${currentUser.username}`);
         }
 
         function loadUserManagementTable() {
